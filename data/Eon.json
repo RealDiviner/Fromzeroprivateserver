@@ -1,0 +1,30 @@
+{
+    "id": 57436521,
+    "name": "Eon",
+    "author": "Diviner",
+    "creators": ["Renn241"],
+    "verifier": "LeahAutist",
+    "verification": "https://www.youtube.com/watch?v=BpNS9_VejvM&list=RDBpNS9_VejvM",
+    "percentToQualify": "100",
+    "password": "Free To Copy",
+    "records": [  
+        {
+            "user": "crazyboy",
+            "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
+            "percent": 100,
+            "hz": 240
+             },
+        {
+            "user": "Djsodhwi",
+            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
+            "percent": 100,
+            "hz": 240
+             },
+        {
+            "user": "Diviner",
+            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
+            "percent": 100,
+            "hz": 240
+        }
+    ]
+}
