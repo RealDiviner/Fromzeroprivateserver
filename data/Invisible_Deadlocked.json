@@ -1,0 +1,30 @@
+{
+    "id": 128,
+    "name": "Invisible Deadlocked",
+    "author": "Diviner",
+    "creators": ["Krmal"],
+    "verifier": "MagicMike",
+    "verification": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
+    "percentToQualify": "70",
+    "password": "Free To Copy",
+    "records": [  
+        {
+            "user": "Diviner",
+            "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
+            "percent": 100,
+            "hz": 240
+             },
+        {
+            "user": "femboy:3",
+            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
+            "percent": 100,
+            "hz": 240
+             },
+        {
+            "user": "LeahAutist",
+            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
+            "percent": 100,
+            "hz": 240
+        }
+    ]
+}
