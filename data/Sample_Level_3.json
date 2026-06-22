@@ -2,23 +2,11 @@
     "id": 57436521,
     "name": "Phobos",
     "author": "Diviner",
-    "creators": ["Solo_Creator"],
-    "verifier": "Phobos",
+    "creators": ["Andromeda And More"],
+    "verifier": "Diviner",
     "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
     "percentToQualify": "100",
     "password": "46290",
     "records": [
-        {
-            "user": "Sample_Victor_1",
-            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
-            "percent": 100,
-            "hz": 360
-        },
-        {
-            "user": "Sample_Victor_2",
-            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
-            "percent": 100,
-            "hz": 120
-        }
     ]
 }
