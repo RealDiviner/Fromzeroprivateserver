@@ -8,12 +8,11 @@
     "percentToQualify": "100",
     "password": "46290",
     "records": [  
-       {
+        {
             "user": "Diviner",
             "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
             "percent": 100,
             "hz": 240
-
         }
     ]
 }
