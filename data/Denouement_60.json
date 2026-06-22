@@ -1,0 +1,24 @@
+{
+    "id": 128,
+    "name": "Denouement 60fps",
+    "author": "Diviner",
+    "creators": ["idk"],
+    "verifier": "femboy:3",
+    "verification": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
+    "percentToQualify": "70",
+    "password": "Free To Copy",
+    "records": [  
+        {
+            "user": "femboy:3",
+            "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
+            "percent": 100,
+            "hz": 60
+             },
+        {
+            "user": "LeahAutist",
+            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
+            "percent": 100,
+            "hz": 60
+        }
+    ]
+}
