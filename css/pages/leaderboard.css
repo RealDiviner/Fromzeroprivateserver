@@ -92,7 +92,7 @@
     text-decoration: underline;
 }
 
-/* Added: blue search bar for leaderboard */
+/* Search bar styling - matches page colors */
 .leaderboard-search-wrap {
   width: 100%;
   display: flex;
@@ -104,20 +104,22 @@
   width: 100%;
   max-width: 520px;
   padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid #4aa3ff;
-  background: linear-gradient(180deg, #e6f4ff 0%, #d6eeff 100%);
-  color: #033a66;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-on-background);
+  background-color: var(--color-background-hover);
+  color: var(--color-on-background);
   font-size: 16px;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+  font-family: "Lexend Deca", sans-serif;
   outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
 .leaderboard-search:focus {
-  box-shadow: 0 0 0 3px rgba(74,163,255,0.18);
-  border-color: #1e90ff;
+  border-color: var(--color-primary);
+  background-color: var(--color-background);
 }
 
 .leaderboard-search::placeholder {
-  color: #6eaefb;
+  color: var(--color-on-background);
+  opacity: 0.6;
 }
