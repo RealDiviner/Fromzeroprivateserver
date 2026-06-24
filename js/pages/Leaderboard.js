@@ -24,6 +24,18 @@ export default {
                         Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
                     </p>
                 </div>
+
+                <div class="leaderboard-search-wrap">
+                    <input
+                        id="leaderboard-search"
+                        class="leaderboard-search"
+                        type="search"
+                        placeholder="Search users (e.g. Le)"
+                        aria-label="Search leaderboard"
+                        @input="onSearch"
+                    />
+                </div>
+
                 <div class="board-container">
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
@@ -106,5 +118,27 @@ export default {
     },
     methods: {
         localize,
+        onSearch(e) {
+            // Debounce input to avoid excessive DOM ops
+            const val = (e.target && e.target.value) ? e.target.value : '';
+            clearTimeout(this._searchTimeout);
+            this._searchTimeout = setTimeout(() => {
+                const q = val.trim().toLowerCase();
+                const list = document.querySelector('.page-leaderboard .board') || document.querySelector('.board') || document.querySelector('main');
+                if (!list) return;
+                const rows = Array.from(list.querySelectorAll('tr'));
+                let firstFound = -1;
+                rows.forEach((r, idx) => {
+                    const text = (r.textContent || '').toLowerCase();
+                    const match = q === '' || text.includes(q);
+                    r.style.display = match ? '' : 'none';
+                    if (match && firstFound === -1) firstFound = idx;
+                });
+                if (firstFound !== -1) {
+                    // select the first matching row so the player pane shows the first result
+                    this.selected = firstFound;
+                }
+            }, 180); // small debounce (180ms)
+        }
     },
 };

@@ -91,3 +91,31 @@
 .page-leaderboard .player .table a:hover {
     text-decoration: underline;
 }
+
+/* Added: blue search bar for leaderboard */
+.leaderboard-search-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.leaderboard-search {
+  width: 100%;
+  max-width: 520px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #4aa3ff;
+  background: linear-gradient(180deg, #e6f4ff 0%, #d6eeff 100%);
+  color: #033a66;
+  font-size: 16px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+  outline: none;
+}
+.leaderboard-search:focus {
+  box-shadow: 0 0 0 3px rgba(74,163,255,0.18);
+  border-color: #1e90ff;
+}
+.leaderboard-search::placeholder {
+  color: #6eaefb;
+}
