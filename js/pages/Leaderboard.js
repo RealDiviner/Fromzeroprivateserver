@@ -1,5 +1,6 @@
 import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
+import { getCountryFlag } from '../flags.js';
 
 import Spinner from '../components/Spinner.js';
 
@@ -39,16 +40,19 @@ export default {
                 <div class="board-container">
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
+                            <td class="flag">
+                                <p class="type-label-lg">{{ getCountryFlag(ientry.country) }}</p>
+                            </td>
                             <td class="rank">
                                 <p class="type-label-lg">#{{ i + 1 }}</p>
-                            </td>
-                            <td class="total">
-                                <p class="type-label-lg">{{ localize(ientry.total) }}</p>
                             </td>
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
                                     <span class="type-label-lg">{{ ientry.user }}</span>
                                 </button>
+                            </td>
+                            <td class="total">
+                                <p class="type-label-lg">{{ localize(ientry.total) }}</p>
                             </td>
                         </tr>
                     </table>
@@ -118,6 +122,7 @@ export default {
     },
     methods: {
         localize,
+        getCountryFlag,
         onSearch(e) {
             // Debounce input to avoid excessive DOM ops
             const val = (e.target && e.target.value) ? e.target.value : '';
