@@ -19,21 +19,21 @@ export default {
         </main>
         <main v-else class="page-leaderboard-container">
             <div class="page-leaderboard">
-                <div class="error-container">
-                    <p class="error" v-if="err.length > 0">
-                        Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
-                    </p>
-                </div>
-
                 <div class="leaderboard-search-wrap">
                     <input
                         id="leaderboard-search"
                         class="leaderboard-search"
                         type="search"
-                        placeholder="Search users (e.g. Le)"
+                        placeholder="Search users"
                         aria-label="Search leaderboard"
                         @input="onSearch"
                     />
+                </div>
+
+                <div class="error-container">
+                    <p class="error" v-if="err.length > 0">
+                        Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
+                    </p>
                 </div>
 
                 <div class="board-container">
