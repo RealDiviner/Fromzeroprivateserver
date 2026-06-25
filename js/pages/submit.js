@@ -6,31 +6,28 @@ export default {
     data() {
         return {
             store,
-            submissionType: 'record', // 'record' or 'level'
-            levels: [], // Stores dynamically fetched list levels
+            submissionType: 'record',
+            levels: [],
             isLoadingLevels: true,
             form: {
                 user: '',
-                levelPath: '', // Tracks the chosen level identifier string
+                levelPath: '',
                 percent: 100,
                 hz: 360,
-                mobile: false, // Tracks the checkbox state
+                mobile: false,
                 link: '',
                 rawFootage: '',
-                // Level specific fields
                 levelName: '',
                 creators: '',
-                verifier: '',
+                verifier: ''
             },
             statusMessage: '',
             isSubmitting: false
         };
     },
     async mounted() {
-        // Fetch existing list configurations at page mount
         const listData = await fetchList();
         if (listData) {
-            // Unpack your [levelData, error] array structure
             this.levels = listData
                 .filter(([level]) => level !== null)
                 .map(([level]) => level);
@@ -133,8 +130,6 @@ export default {
     methods: {
         handleSubmit() {
             this.isSubmitting = true;
-            
-            // Build text variables dynamically based on form types
             const selectedLevelObj = this.levels.find(l => l.path === this.form.levelPath);
             const levelDisplayTitle = selectedLevelObj ? selectedLevelObj.name : this.form.levelPath;
 
@@ -143,15 +138,13 @@ export default {
                 : `Level Submission Request: ${this.form.levelName}`;
                 
             const body = this.submissionType === 'record'
-                ? `### Player Record Submission\n\n- **Player**: ${this.form.user} *(Case Sensitive)*\n- **Level Chosen**: ${levelDisplayTitle}\n- **Level File Path Identifier**: \`${this.form.levelPath}.json\`\n- **Percent achieved**: ${this.form.percent}%\n- **Hardware Refresh Metrics**: ${this.form.hz}Hz\n- **Mobile Run**: ${this.form.mobile ? 'Yes' : 'No'}\n- **Completion Video Proof**: ${this.form.link}\n\n#### 🔒 Verification Metadata (Reviewers Only)\n- **Unedited Full Length Link**: ${this.form.rawFootage}`
+                ? `### Player Record Submission\n\n- **Player**: ${this.form.user} *(Case Sensitive)*\n- **Level Chosen**: ${levelDisplayTitle}\n- **Level File Path Identifier**: \`${this.form.levelPath}.json\`\n- **Percent achieved**: ${this.form.percent}%\n- **Hardware Refresh Metrics**: ${this.form.hz}Hz\n- **Mobile Run**: ${this.form.mobile ? 'Yes' : 'No'}\n- **Completion Video Proof**: ${this.form.link}\n\n#### 🔒 Verification Metadata\n- **Unedited Full Length Link**: ${this.form.rawFootage}`
                 : `### New Level Asset Request\n\n- **Requested Level Name**: ${this.form.levelName}\n- **Creators**: ${this.form.creators}\n- **Verifier Profile**: ${this.form.verifier}\n- **Verification Video Link**: ${this.form.link}`;
 
-            // Replace with your exact repository URL path targets
             const repoUrl = `https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/issues/new`;
             const finalUrl = `${repoUrl}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
             
             window.open(finalUrl, '_blank');
-            
             this.statusMessage = "A GitHub window has opened. Click 'Submit new issue' to finalize your entry submission tracking!";
             this.isSubmitting = false;
         }
