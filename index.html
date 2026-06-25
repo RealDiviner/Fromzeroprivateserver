@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=1024" />
         <title>From Zero Demonlist</title>
 
-        <!-- Replace your server icon by uploading an image file named "list_icon.png"-->
         <link rel="icon" href="/list_icon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -60,12 +59,13 @@
                             alt=""
                         />
                     </button>
-                    <!-- Replace the '#' with your discord server's invite-->
                     <a class="nav__icon" href="https://discord.gg/g3VXuAuY">
                         <img src="/assets/discord.svg" alt="Discord Logo" />
                     </a>
-                    <!-- List record submission form, add a link to replace the '#' when putting a link to your list submission form-->
-  
+                    
+                    <router-link class="nav__cta" to="/submit">
+                        <span class="type-label-lg">Submit</span>
+                    </router-link>
                 </div>
             </nav>
         </header>
