@@ -1,13 +1,17 @@
+import { fetchList } from './content.js'; // Imports your real level list generator
+
 export default {
     data: () => ({
         player: '',
         countryCode: 'US', // Default country code selection
-        levelChosen: '',
+        levelChosen: '',   // Will now hold the selected drop-down option value
         percent: '100',
         hz: '240',
         isMobile: 'No',
         videoLink: '',
-        rawVideoLink: ''
+        rawVideoLink: '',
+        levels: [],        // Array to store your loaded levels
+        loadingLevels: true
     }),
     computed: {
         countries() {
@@ -21,7 +25,8 @@ export default {
                 { code: 'BR', name: '🇧🇷 Brazil' },
                 { code: 'KR', name: '🇰🇷 South Korea' },
                 { code: 'JP', name: '🇯🇵 Japan' },
-                { code: 'RU', name: '🇷🇺 Russia' }
+                { code: 'RU', name: '🇷🇺 Russia' },
+                { code: 'PL', name: '🇵🇱 Poland' }
             ];
         }
     },
@@ -46,7 +51,12 @@ export default {
 
                 <div>
                     <label style="display: block; margin-bottom: 5px;">Level Chosen:</label>
-                    <input type="text" v-model="levelChosen" required placeholder="e.g. The Ultimate Phase" style="width: 100%; padding: 8px;" />
+                    <select v-model="levelChosen" required style="width: 100%; padding: 8px;">
+                        <option value="" disabled>{{ loadingLevels ? 'Loading levels...' : '-- Select a Level --' }}</option>
+                        <option v-for="lvl in levels" :key="lvl.path" :value="lvl.name">
+                            {{ lvl.name }}
+                        </option>
+                    </select>
                 </div>
 
                 <div style="display: flex; gap: 10px;">
@@ -78,12 +88,31 @@ export default {
                     <input type="url" v-model="rawVideoLink" placeholder="Leave blank if identical to proof link" style="width: 100%; padding: 8px;" />
                 </div>
 
-                <button type="submit" style="padding: 10px; background-color: #2da44e; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                <button type="submit" :disabled="loadingLevels" style="padding: 10px; background-color: #2da44e; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
                     Submit to Editors
                 </button>
             </form>
         </div>
     `,
+    async mounted() {
+        try {
+            // Reaches out to content.js to safely scrape your official database entries list 
+            const rawList = await fetchList();
+            if (rawList) {
+                // Filters out any levels that failed to fetch and maps out clean naming strings
+                this.levels = rawList
+                    .filter(([level]) => level !== null)
+                    .map(([level]) => ({
+                        name: level.name,
+                        path: level.path
+                    }));
+            }
+        } catch (e) {
+            console.error("Failed to dynamically load site levels list inside submit component layout:", e);
+        } finally {
+            this.loadingLevels = false;
+        }
+    },
     methods: {
         handleSubmit() {
             // 1. Enforce capitalization guidelines while replacing spaces with underscores
