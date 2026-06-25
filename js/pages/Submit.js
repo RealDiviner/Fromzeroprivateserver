@@ -23,8 +23,7 @@ export default function SubmitRecordForm() {
         { code: 'BR', name: '🇧🇷 Brazil' },
         { code: 'KR', name: '🇰🇷 South Korea' },
         { code: 'JP', name: '🇯🇵 Japan' },
-        { code: 'RU', name: '🇷🇺 Russia' },
-        // Append additional countries into this map array pattern as required
+        { code: 'RU', name: '🇷🇺 Russia' }
     ];
 
     const handleChange = (e) => {
@@ -35,13 +34,11 @@ export default function SubmitRecordForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // 1. Enforce capitalization guidelines while replacing spaces with underscores
-        // Example: "The Ultimate Phase" -> "The_Ultimate_Phase"
-        const formattedLevel = formData.levelChosen
-            .trim()
-            .replace(/\s+/g, '_');
+        // Safe cleanup turning spaces into underscores without triggering syntax token conflicts
+        const rawLevel = formData.levelChosen || '';
+        const formattedLevel = rawLevel.trim().split(/\s+/).join('_');
 
-        // 2. Build the precise body markdown layout text required by the GitHub Actions engine
+        // Build the precise body markdown layout text required by the GitHub Actions engine
         const issueBody = `### Player Record Submission
 
 - **Player**: ${formData.player.trim()} *(Case Sensitive)*
@@ -55,17 +52,21 @@ export default function SubmitRecordForm() {
 #### 🔒 Verification Metadata
 - **Unedited Full Length Link**: ${formData.rawVideoLink.trim() || formData.videoLink.trim()}`;
 
-        // 3. Compile parameters safely for the URI scheme context pipeline
-        const repoOwner = "RealDiviner"; // Replace with your exact GitHub Username
-        const repoName = "Fromzeroprivateserver";       // Replace with your exact Repository Name
+        // Replace these with your exact GitHub details
+        const repoOwner = "YOUR_GITHUB_USERNAME"; 
+        const repoName = "YOUR_REPO_NAME";       
         
-        const issueTitle = encodeURIComponent(`Record Submission: ${formData.player.trim()} - ${formattedLevel}`);
-        const encodedBody = encodeURIComponent(issueBody);
+        const issueTitle = `Record Submission: ${formData.player.trim()} - ${formattedLevel}`;
 
-        // Generates the native template redirection link
-        const gitHubUrl = `https://github.com/${repoOwner}/${repoName}/issues/new?title=${issueTitle}&body=${encodedBody}`;
+        // Combine parameters securely via standard URLSearchParams to safely escape characters like "<" or ">"
+        const params = new URLSearchParams({
+            title: issueTitle,
+            body: issueBody
+        });
 
-        // Open the pre-filled issue creation ticket page interface context tab seamlessly
+        const gitHubUrl = `https://github.com/${RealDiviner}/${Fromzeroprivateserver}/issues/new?${params.toString()}`;
+
+        // Open the pre-filled issue window tab safely
         window.open(gitHubUrl, '_blank');
     };
 
