@@ -1,3 +1,12 @@
+---
+name: record_submission
+about: record submission
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 Markdown
 ---
 name: Player Record Submission
