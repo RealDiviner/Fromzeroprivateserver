@@ -34,5 +34,7 @@ export function getCountryFlag(countryCode) {
  * Full list: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
  */
 export const countryCodes = {
+    'PL': 'Poland',
+    'RU': 'Russia',
     // Add your country codes here as needed
 };
