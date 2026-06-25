@@ -1,0 +1,53 @@
+name: Automated Record Approver Engine
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  inject_record:
+    # Execute this script ONLY when an authorized administrator applies the "approved" label
+    if: github.event.label.name == 'approved'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Checkout Source Code Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Environment Node Runtime Configuration
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Execute Injection Parsing Scripts Engine
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: node scripts/process-submission.js
+
+      - name: Commit Modified Asset Back to Storage Branch
+        run: |
+          git config --global user.name "FZDL List Bot Automation"
+          git config --global user.email "list-bot@github.com"
+          git add data/*.json
+          git commit -m "Auto-inject approved record entry from Issue #${{ github.event.issue.number }}"
+          git push
+
+      - name: Automatically Close Handled Tracked Tickets
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Comment on the issue to confirm it went live, then close it out cleanly
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: "🎉 **Submission Approved!** The record details have been compiled and merged automatically into the live list metrics."
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
