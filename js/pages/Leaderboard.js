@@ -59,7 +59,7 @@ export default {
                 </div>
                 <div class="player-container">
                     <div class="player">
-                        <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
+                        <h1>{{ getCountryFlag(entry.country) }} #{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ entry.total }}</h3>
                         <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length}})</h2>
                         <table class="table">
@@ -110,21 +110,19 @@ export default {
     `,
     computed: {
         entry() {
-            return this.leaderboard[this.selected];
+            return this.leaderboard[this.selected] || { user: '', total: 0, country: 'UN', verified: [], completed: [], progressed: [] };
         },
     },
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
         this.leaderboard = leaderboard;
         this.err = err;
-        // Hide loading spinner
         this.loading = false;
     },
     methods: {
         localize,
         getCountryFlag,
         onSearch(e) {
-            // Debounce input to avoid excessive DOM ops
             const val = (e.target && e.target.value) ? e.target.value : '';
             clearTimeout(this._searchTimeout);
             this._searchTimeout = setTimeout(() => {
@@ -140,10 +138,9 @@ export default {
                     if (match && firstFound === -1) firstFound = idx;
                 });
                 if (firstFound !== -1) {
-                    // select the first matching row so the player pane shows the first result
                     this.selected = firstFound;
                 }
-            }, 180); // small debounce (180ms)
+            }, 180);
         }
     },
 };
