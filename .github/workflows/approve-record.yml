@@ -5,7 +5,6 @@ on:
 
 jobs:
   inject_record:
-    # Execute this script ONLY when an authorized administrator applies the "approved" label
     if: github.event.label.name == 'approved'
     runs-on: ubuntu-latest
     permissions:
@@ -13,17 +12,11 @@ jobs:
       issues: write
 
     steps:
-      # Upgraded to v4.2.2+ to resolve internal Node deprecation warnings
       - name: Checkout Source Code Repository
         uses: actions/checkout@v4.2.2
 
-      # Upgraded to v4.2.0+ to natively support the updated runtime env
-      - name: Set up Environment Node Runtime Configuration
-        uses: actions/setup-node@v4.2.0
-        with:
-          node-version: 24
-
-      - name: Execute Injection Parsing Scripts Engine
+      # This runs the script directly using the runner's native environment, bypassing warnings
+      - name: Execute Injection Parsing Engine
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: node scripts/process-submission.js
@@ -33,14 +26,13 @@ jobs:
           git config --global user.name "FZDL List Bot Automation"
           git config --global user.email "list-bot@github.com"
           git add data/*.json
-          git commit -m "Auto-inject approved record entry from Issue #${{ github.event.issue.number }}"
+          git commit -m "Auto-inject approved record entry from Issue #${{ github.event.issue.number }}" || exit 0
           git push
 
       - name: Automatically Close Handled Tracked Tickets
         uses: actions/github-script@v7
         with:
           script: |
-            // Comment on the issue to confirm it went live, then close it out cleanly
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
