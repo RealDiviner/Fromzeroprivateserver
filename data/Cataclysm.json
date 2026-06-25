@@ -10,24 +10,28 @@
     "records": [  
         {
             "user": "Diviner",
+            "country": "US",
             "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
             "percent": 100,
             "hz": 240
              },
         {
             "user": "MagicMike",
+            "country": "GB",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
              },
         {
             "user": "femboy:3",
+            "country": "CA",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
             },
         {
             "user": "AlderTree",
+            "country": "GB",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 144,
@@ -35,18 +39,21 @@
              },
         {
             "user": "cryingrn",
+            "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
              },
         {
             "user": "julia",
+            "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
              },
         {
             "user": "GreyHeart",
+            "country": "DE",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
