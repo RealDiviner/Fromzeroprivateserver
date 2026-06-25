@@ -1,4 +1,4 @@
-import { fetchList } from './content.js'; // Imports your real level list generator
+import { fetchList } from '/js/content.js'; // Updated to an absolute path layout to resolve routing 404s
 
 export default {
     data: () => ({
