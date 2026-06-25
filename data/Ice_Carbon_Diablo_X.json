@@ -1,47 +1,57 @@
 {
-  "id": 57436521,
-  "name": "Ice Carbon Diablo X",
-  "author": "Diviner",
-  "creators": ["Roadbose"],
-  "verifier": "MagicMike",
-  "verification": "https://www.youtube.com/watch?v=lPgsoNRq_Dw&list=RDlPgsoNRq_Dw",
-  "percentToQualify": "64",
-  "password": "Free To Copy",
-  "records": [
-    {
-      "user": "Diviner",
-      "country": "US",
-      "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
-      "percent": 100,
-      "hz": 240
-    },
-    {
-      "user": "Djsodhwi",
-      "country": "US",
-      "link": "https://www.youtube.com/watch?v=U84GRxrWyd8",
-      "percent": 100,
-      "hz": 240
-    },
-    {
-      "user": "LeahAutist",
-      "country": "US",
-      "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
-      "percent": 100,
-      "hz": 240
-    },
-    {
-      "user": "LeechMan50",
-      "country": "PL",
-      "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
-      "percent": 100,
-      "hz": 240
-    },
-    {
-      "user": "cryingrn",
-      "country": "US",
-      "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
-      "percent": 100,
-      "hz": 240
-    }
-  ]
+    "id": 57436521,
+    "name": "Ice Carbon Diablo X",
+    "author": "Diviner",
+    "creators": [
+        "Roadbose"
+    ],
+    "verifier": "MagicMike",
+    "verification": "https://www.youtube.com/watch?v=lPgsoNRq_Dw&list=RDlPgsoNRq_Dw",
+    "percentToQualify": "64",
+    "password": "Free To Copy",
+    "records": [
+        {
+            "user": "Diviner",
+            "country": "US",
+            "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
+            "percent": 100,
+            "hz": 240
+        },
+        {
+            "user": "Djsodhwi",
+            "country": "US",
+            "link": "https://www.youtube.com/watch?v=U84GRxrWyd8",
+            "percent": 100,
+            "hz": 240
+        },
+        {
+            "user": "LeahAutist",
+            "country": "US",
+            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
+            "percent": 100,
+            "hz": 240
+        },
+        {
+            "user": "LeechMan50",
+            "country": "PL",
+            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
+            "percent": 100,
+            "hz": 240
+        },
+        {
+            "user": "cryingrn",
+            "country": "US",
+            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
+            "percent": 100,
+            "hz": 240
+        },
+        {
+            "user": "Sapphic_qt",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=aUzo0f_Ojhs&list=RDaUzo0f_Ojhs"
+        }
+    ]
 }
