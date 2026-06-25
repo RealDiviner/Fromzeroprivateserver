@@ -49,14 +49,14 @@ if (!player || !levelChosen || isNaN(percent) || !videoLink) {
     process.exit(1);
 }
 
-// Preserves the exact capitalization and spacing submitted by the user
-// Example: "Poltergeist" becomes "Poltergeist.json", "Sonic Wave" becomes "Sonic Wave.json"
-const cleanFileName = levelChosen.trim().replace(/[^a-zA-Z0-9\s-_]/g, '');
+// Preserves capitalization, but switches ALL spaces into underscores
+// Example: "The Ultimate Phase" becomes "The_Ultimate_Phase"
+const cleanFileName = levelChosen.trim().replace(/\s+/g, '_').replace(/[^a-zA-Z0-9-_]/g, '');
 const targetFilePath = path.join(__dirname, '../data', `${cleanFileName}.json`);
 
 if (!fs.existsSync(targetFilePath)) {
     console.error(`Target level asset file could not be located at path target: ${targetFilePath}`);
-    console.error(`Expected to find a capitalized file at: data/${cleanFileName}.json`);
+    console.error(`Expected to find a file at: data/${cleanFileName}.json`);
     process.exit(1);
 }
 
