@@ -1,170 +1,131 @@
-import { store } from '../main.js';
+import React, { useState } from 'react';
 
-export default {
-    name: 'Submit',
-    data() {
-        return {
-            store,
-            submissionType: 'record',
-            levels: [],
-            isLoadingLevels: true,
-            form: {
-                user: '',
-                levelPath: '',
-                percent: 100,
-                hz: 360,
-                mobile: false,
-                link: '',
-                rawFootage: '',
-                levelName: '',
-                creators: '',
-                verifier: ''
-            },
-            statusMessage: '',
-            isSubmitting: false
-        };
-    },
-    async mounted() {
-        try {
-            // Safe dynamically imported fetch fallback to prevent compilation/router crashes
-            const contentModule = await import('../content.js');
-            
-            // Try to resolve the fetchList function whether it's a default export or a named export
-            const fetchListFn = contentModule.fetchList || contentModule.default;
-            
-            if (typeof fetchListFn === 'function') {
-                const listData = await fetchListFn();
-                if (Array.isArray(listData)) {
-                    // Adapt safely to your list data structure layout [level, err] or plain object arrays
-                    this.levels = listData
-                        .filter(item => item !== null && item !== undefined)
-                        .map(item => Array.isArray(item) ? item[0] : item)
-                        .filter(lvl => lvl && (lvl.path || lvl.name));
-                }
-            }
-        } catch (error) {
-            console.error("Failed loading levels dynamically:", error);
-            this.statusMessage = "Notice: Could not load automatic levels menu. Please verify your data configuration files.";
-        } finally {
-            this.isLoadingLevels = false;
-        }
-    },
-    template: `
-        <main class="page-leaderboard-container">
-            <div class="page-leaderboard" style="grid-template-columns: 1fr; max-width: 40rem; padding-inline: 1rem;">
+export default function SubmitRecordForm() {
+    const [formData, setFormData] = useState({
+        player: '',
+        countryCode: 'US', // Default country code selection
+        levelChosen: '',
+        percent: '100',
+        hz: '240',
+        isMobile: 'No',
+        videoLink: '',
+        rawVideoLink: ''
+    });
+
+    // A map of ISO standard two-letter country codes
+    const countries = [
+        { code: 'US', name: '🇺🇸 United States' },
+        { code: 'GB', name: '🇬🇧 United Kingdom' },
+        { code: 'CA', name: '🇨🇦 Canada' },
+        { code: 'AU', name: '🇦🇺 Australia' },
+        { code: 'DE', name: '🇩🇪 Germany' },
+        { code: 'FR', name: '🇫🇷 France' },
+        { code: 'BR', name: '🇧🇷 Brazil' },
+        { code: 'KR', name: '🇰🇷 South Korea' },
+        { code: 'JP', name: '🇯🇵 Japan' },
+        { code: 'RU', name: '🇷🇺 Russia' },
+        // Append additional countries into this map array pattern as required
+    ];
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // 1. Enforce capitalization guidelines while replacing spaces with underscores
+        // Example: "The Ultimate Phase" -> "The_Ultimate_Phase"
+        const formattedLevel = formData.levelChosen
+            .trim()
+            .replace(/\s+/g, '_');
+
+        // 2. Build the precise body markdown layout text required by the GitHub Actions engine
+        const issueBody = `### Player Record Submission
+
+- **Player**: ${formData.player.trim()} *(Case Sensitive)*
+- **Country**: ${formData.countryCode}
+- **Level Chosen**: ${formattedLevel}
+- **Percent achieved**: ${formData.percent}%
+- **Hardware Refresh Metrics**: ${formData.hz}Hz
+- **Mobile Run**: ${formData.isMobile}
+- **Completion Video Proof**: ${formData.videoLink.trim()}
+
+#### 🔒 Verification Metadata
+- **Unedited Full Length Link**: ${formData.rawVideoLink.trim() || formData.videoLink.trim()}`;
+
+        // 3. Compile parameters safely for the URI scheme context pipeline
+        const repoOwner = "RealDiviner"; // Replace with your exact GitHub Username
+        const repoName = "Fromzeroprivateserver";       // Replace with your exact Repository Name
+        
+        const issueTitle = encodeURIComponent(`Record Submission: ${formData.player.trim()} - ${formattedLevel}`);
+        const encodedBody = encodeURIComponent(issueBody);
+
+        // Generates the native template redirection link
+        const gitHubUrl = `https://github.com/${repoOwner}/${repoName}/issues/new?title=${issueTitle}&body=${encodedBody}`;
+
+        // Open the pre-filled issue creation ticket page interface context tab seamlessly
+        window.open(gitHubUrl, '_blank');
+    };
+
+    return (
+        <div style={{ maxWidth: '500px', margin: '20px auto', padding: '20px', fontFamily: 'sans-serif' }}>
+            <h2>Submit Level Record Data</h2>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                 
-                <h1 class="type-h1" style="margin-bottom: 2rem;">Submit a Record</h1>
-                
-                <div class="tabs" style="margin-bottom: 2rem;">
-                    <button type="button" class="tab" :class="{ selected: submissionType === 'record' }" @click="submissionType = 'record'">Player Record</button>
-                    <button type="button" class="tab" :class="{ selected: submissionType === 'level' }" @click="submissionType = 'level'">New Level</button>
+                <div>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>Player Name:</label>
+                    <input type="text" name="player" value={formData.player} onChange={handleChange} required placeholder="e.g. Axim" style={{ width: '100%', padding: '8px' }} />
                 </div>
 
-                <form @submit.prevent="handleSubmit" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    
-                    <div v-if="submissionType === 'record'" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        
-                        <div>
-                            <label class="type-title-sm" style="display: block; margin-bottom: 0.5rem;">Level Being Completed</label>
-                            
-                            <select v-if="levels.length > 0" v-model="form.levelPath" class="leaderboard-search" style="width: 100%; cursor: pointer;" required>
-                                <option value="" disabled selected>Click to select a level</option>
-                                <option v-for="lvl in levels" :key="lvl.path || lvl.name" :value="lvl.path || lvl.name">
-                                    {{ lvl.name }}
-                                </option>
-                            </select>
-                            <input v-else type="text" v-model="form.levelPath" class="leaderboard-search" placeholder="e.g., Sonic Wave" required :disabled="isLoadingLevels" />
-                        </div>
+                <div>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>Country:</label>
+                    <select name="countryCode" value={formData.countryCode} onChange={handleChange} style={{ width: '100%', padding: '8px' }}>
+                        {countries.map(c => (
+                            <option key={c.code} value={c.code}>{c.name}</option>
+                        ))}
+                    </select>
+                </div>
 
-                        <div>
-                            <label class="type-title-sm" style="display: block; margin-bottom: 0.25rem;">Username</label>
-                            <span class="type-label-sm" style="color: var(--color-error); display: block; margin-bottom: 0.5rem;">⚠️ Notice: Usernames are strictly case-sensitive.</span>
-                            <input type="text" v-model="form.user" class="leaderboard-search" placeholder="e.g., Player1" required />
-                        </div>
+                <div>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>Level Chosen:</label>
+                    <input type="text" name="levelChosen" value={formData.levelChosen} onChange={handleChange} required placeholder="e.g. The Ultimate Phase" style={{ width: '100%', padding: '8px' }} />
+                </div>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end;">
-                            <div>
-                                <label class="type-title-sm" style="display: block; margin-bottom: 0.5rem;">Percentage Completed</label>
-                                <input type="number" v-model.number="form.percent" min="1" max="100" class="leaderboard-search" required />
-                            </div>
-                            <div>
-                                <label class="type-title-sm" style="display: block; margin-bottom: 0.5rem;">Refresh Rate / FPS (Hz)</label>
-                                <input type="number" v-model.number="form.hz" min="1" max="1000" class="leaderboard-search" required />
-                            </div>
-                        </div>
-
-                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-block: 0.5rem;">
-                            <span class="type-title-sm">Mobile Player?</span>
-                            <label class="type-body" style="display: flex; align-items: center; gap: 0.5rem; margin: 0; cursor: pointer;">
-                                <input type="checkbox" v-model="form.mobile" style="transform: scale(1.2); cursor: pointer;" />
-                                {{ form.mobile ? 'Yes' : 'No' }}
-                            </label>
-                        </div>
-
-                        <div>
-                            <label class="type-title-sm" style="display: block; margin-bottom: 0.5rem;">Completion Video Link (Public Showcase)</label>
-                            <input type="text" v-model="form.link" class="leaderboard-search" placeholder="https://www.youtube.com/watch?v=..." required />
-                        </div>
-
-                        <div>
-                            <label class="type-title-sm" style="display: block; margin-bottom: 0.25rem;">Unedited Raw Footage Link</label>
-                            <span class="type-label-sm" style="opacity: 0.7; display: block; margin-bottom: 0.5rem;">🔒 Hidden field: Only visible to list editors during verification checking.</span>
-                            <input type="text" v-model="form.rawFootage" class="leaderboard-search" placeholder="https://youtube.com/watch?... or Google Drive Link" required />
-                        </div>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ flex: 1 }}>
+                        <label style={{ display: 'block', marginBottom: '5px' }}>Percent Achieved:</label>
+                        <input type="number" name="percent" value={formData.percent} onChange={handleChange} required min="1" max="100" style={{ width: '100%', padding: '8px' }} />
                     </div>
-
-                    <div v-else style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        <div>
-                            <label class="type-title-sm" style="display: block; margin-bottom: 0.5rem;">Level Name</label>
-                            <input type="text" v-model="form.levelName" class="leaderboard-search" placeholder="e.g., Sonic Wave" required />
-                        </div>
-                        <div>
-                            <label class="type-title-sm" style="display: block; margin-bottom: 0.5rem;">Creators (Comma separated)</label>
-                            <input type="text" v-model="form.creators" class="leaderboard-search" placeholder="e.g., Cyclic, Rustam" required />
-                        </div>
-                        <div>
-                            <label class="type-title-sm" style="display: block; margin-bottom: 0.5rem;">Verifier Name</label>
-                            <input type="text" v-model="form.verifier" class="leaderboard-search" placeholder="e.g., Sunix" required />
-                        </div>
-                        <div>
-                            <label class="type-title-sm" style="display: block; margin-bottom: 0.5rem;">Verification Video Link</label>
-                            <input type="text" v-model="form.link" class="leaderboard-search" placeholder="https://www.youtube.com/watch?v=..." required />
-                        </div>
+                    <div style={{ flex: 1 }}>
+                        <label style={{ display: 'block', marginBottom: '5px' }}>Refresh Metrics (Hz):</label>
+                        <input type="number" name="hz" value={formData.hz} onChange={handleChange} required style={{ width: '100%', padding: '8px' }} />
                     </div>
+                </div>
 
-                    <div v-if="statusMessage" class="error-container" style="grid-column: span 1;">
-                        <p class="error" style="border-radius: 0.5rem;">{{ statusMessage }}</p>
-                    </div>
+                <div>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>Mobile Run?</label>
+                    <select name="isMobile" value={formData.isMobile} onChange={handleChange} style={{ width: '100%', padding: '8px' }}>
+                        <option value="No">No (PC / Console)</option>
+                        <option value="Yes">Yes (Mobile Device)</option>
+                    </select>
+                </div>
 
-                    <button type="submit" class="btn" :disabled="isSubmitting" style="align-self: flex-start; margin-top: 1rem;">
-                        {{ isSubmitting ? 'Processing Submission...' : 'Submit to Editors' }}
-                    </button>
-                </form>
+                <div>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>Completion Video Proof Link:</label>
+                    <input type="url" name="videoLink" value={formData.videoLink} onChange={handleChange} required placeholder="https://www.youtube.com/..." style={{ width: '100%', padding: '8px' }} />
+                </div>
 
-            </div>
-        </main>
-    `,
-    methods: {
-        handleSubmit() {
-            this.isSubmitting = true;
-            const selectedLevelObj = this.levels.find(l => (l.path === this.form.levelPath || l.name === this.form.levelPath));
-            const levelDisplayTitle = selectedLevelObj ? selectedLevelObj.name : this.form.levelPath;
+                <div>
+                    <label style={{ display: 'block', marginBottom: '5px' }}>Unedited Full Length Video Link (Optional):</label>
+                    <input type="url" name="rawVideoLink" value={formData.rawVideoLink} onChange={handleChange} placeholder="Leave blank if identical to proof link" style={{ width: '100%', padding: '8px' }} />
+                </div>
 
-            const title = this.submissionType === 'record' 
-                ? `Record Submission: ${this.form.user} - ${levelDisplayTitle}`
-                : `Level Submission Request: ${this.form.levelName}`;
-                
-            const body = this.submissionType === 'record'
-                ? `### Player Record Submission\n\n- **Player**: ${this.form.user} *(Case Sensitive)*\n- **Level Chosen**: ${levelDisplayTitle}\n- **Percent achieved**: ${this.form.percent}%\n- **Hardware Refresh Metrics**: ${this.form.hz}Hz\n- **Mobile Run**: ${this.form.mobile ? 'Yes' : 'No'}\n- **Completion Video Proof**: ${this.form.link}\n\n#### 🔒 Verification Metadata\n- **Unedited Full Length Link**: ${this.form.rawFootage}`
-                : `### New Level Asset Request\n\n- **Requested Level Name**: ${this.form.levelName}\n- **Creators**: ${this.form.creators}\n- **Verifier Profile**: ${this.form.verifier}\n- **Verification Video Link**: ${this.form.link}`;
-
-            // Replace with your GitHub details
-const repoUrl = `https://github.com/RealDiviner/Fromzeroprivateserver/issues/new`;
-const finalUrl = `${repoUrl}?template=record_submission.md&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
-            
-            window.open(finalUrl, '_blank');
-            this.statusMessage = "A GitHub window has opened. Click 'Submit new issue' to finalize your entry submission tracking!";
-            this.isSubmitting = false;
-        }
-    }
-};
+                <button type="submit" style={{ padding: '10px', backgroundColor: '#2da44e', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>
+                    Submit to Editors
+                </button>
+            </form>
+        </div>
+    );
+}
