@@ -1,6 +1,6 @@
 import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
-import { getCountryFlag } from './flags.js';
+import { getCountryFlag } from '/js/flags.js';
 
 import Spinner from '../components/Spinner.js';
 
