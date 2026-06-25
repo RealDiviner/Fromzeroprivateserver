@@ -1,4 +1,5 @@
 import { round, score } from './score.js';
+import { getCountryFlag } from '/js/flags.js'; // Added absolute path import rule to stop 404 errors
 
 /**
  * Path to directory containing `_list.json` and all levels
