@@ -41,7 +41,7 @@ export default {
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
                             <td class="flag">
-                                <p class="type-label-lg">{{ getCountryFlag(ientry.country || 'UN') }}</p>
+                                <p class="type-label-lg">{{ getCountryFlag(ientry.country || 'US') }}</p>
                             </td>
                             <td class="rank">
                                 <p class="type-label-lg">#{{ i + 1 }}</p>
@@ -113,11 +113,11 @@ export default {
             // Safely extracts the current selected player data and guarantees fallback properties exist
             const selectedPlayer = this.leaderboard[this.selected];
             if (!selectedPlayer) {
-                return { user: '', total: 0, country: 'UN', verified: [], completed: [], progressed: [] };
+                return { user: '', total: 0, country: 'US', verified: [], completed: [], progressed: [] };
             }
             return {
                 ...selectedPlayer,
-                country: selectedPlayer.country || 'UN'
+                country: selectedPlayer.country && selectedPlayer.country !== 'UN' ? selectedPlayer.country : 'US'
             };
         },
     },
