@@ -17,10 +17,13 @@
     border-color: var(--color-on-primary);
 }
 .nav .nav__actions {
-    flex: 1;
+    /* FIX: Collapse the layout block width to fix the unclickable button bug */
+    flex: 0 1 auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    /* FIX: Push the actions container cleanly to the right side of the flexbox row */
+    margin-left: auto;
 }
 .nav .nav__actions .nav__icon {
     height: 3rem;
