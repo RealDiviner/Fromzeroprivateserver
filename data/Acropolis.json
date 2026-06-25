@@ -2,39 +2,49 @@
     "id": 128,
     "name": "Acropolis",
     "author": "Diviner",
-    "creators": ["Zobros"],
+    "creators": [
+        "Zobros"
+    ],
     "verifier": "Diviner",
     "verification": "https://www.youtube.com/watch?v=fN_H7VXcAQs",
     "percentToQualify": "60",
     "password": "Free To Copy",
-    "records": [  
+    "records": [
         {
             "user": "Djsodhwi",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
             "percent": 100,
             "hz": 240
-             },
+        },
         {
             "user": "LeahAutist",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
-              },
+        },
         {
             "user": "SpiritX",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
-             },
+        },
         {
             "user": "femboy:3",
             "country": "CA",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
+        },
+        {
+            "user": "julia",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=SSAfuCZ2cks&list=RDSSAfuCZ2cks"
         }
     ]
 }
