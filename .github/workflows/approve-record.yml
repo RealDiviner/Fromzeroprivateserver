@@ -19,7 +19,7 @@ jobs:
       - name: Set up Environment Node Runtime Configuration
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
 
       - name: Execute Injection Parsing Scripts Engine
         env:
