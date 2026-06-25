@@ -159,8 +159,8 @@ export default {
                 : `### New Level Asset Request\n\n- **Requested Level Name**: ${this.form.levelName}\n- **Creators**: ${this.form.creators}\n- **Verifier Profile**: ${this.form.verifier}\n- **Verification Video Link**: ${this.form.link}`;
 
             // Replace with your GitHub details
-            const repoUrl = `https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/issues/new`;
-            const finalUrl = `${repoUrl}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+const repoUrl = `https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/issues/new`;
+const finalUrl = `${repoUrl}?template=record_submission.md&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
             
             window.open(finalUrl, '_blank');
             this.statusMessage = "A GitHub window has opened. Click 'Submit new issue' to finalize your entry submission tracking!";
