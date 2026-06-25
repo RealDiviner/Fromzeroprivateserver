@@ -1,12 +1,3 @@
----
-name: record_submission
-about: record submission
-title: ''
-labels: ''
-assignees: ''
-
----
-
 Markdown
 ---
 name: Player Record Submission
@@ -19,8 +10,8 @@ assignees: ''
 ### Player Record Submission
 
 - **Player**: LeaveThisUnchanged
+- **Country**: LeaveThisUnchanged
 - **Level Chosen**: LeaveThisUnchanged
-- **Level File Path Identifier**: LeaveThisUnchanged
 - **Percent achieved**: LeaveThisUnchanged
 - **Hardware Refresh Metrics**: LeaveThisUnchanged
 - **Mobile Run**: LeaveThisUnchanged
