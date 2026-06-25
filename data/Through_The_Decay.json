@@ -10,6 +10,7 @@
     "records": [  
         {
             "user": "LeahAutist",
+            "country": "US",
             "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
             "percent": 100,
             "hz": 240
@@ -22,6 +23,7 @@
          },
         {
             "user": "AlderTree",
+            "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 144,
