@@ -49,14 +49,14 @@ if (!player || !levelChosen || isNaN(percent) || !videoLink) {
     process.exit(1);
 }
 
-// Convert "Poltergeist" to a standard lowercase filename: "poltergeist.json"
-// Also replaces spaces with hyphens automatically if your file names use them (e.g. "sonic-wave.json")
-const cleanFileName = levelChosen.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
+// Preserves the exact capitalization and spacing submitted by the user
+// Example: "Poltergeist" becomes "Poltergeist.json", "Sonic Wave" becomes "Sonic Wave.json"
+const cleanFileName = levelChosen.trim().replace(/[^a-zA-Z0-9\s-_]/g, '');
 const targetFilePath = path.join(__dirname, '../data', `${cleanFileName}.json`);
 
 if (!fs.existsSync(targetFilePath)) {
     console.error(`Target level asset file could not be located at path target: ${targetFilePath}`);
-    console.error(`Expected to find a file at: data/${cleanFileName}.json`);
+    console.error(`Expected to find a capitalized file at: data/${cleanFileName}.json`);
     process.exit(1);
 }
 
