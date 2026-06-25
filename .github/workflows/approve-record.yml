@@ -13,13 +13,15 @@ jobs:
       issues: write
 
     steps:
+      # Upgraded to v4.2.2+ to resolve internal Node deprecation warnings
       - name: Checkout Source Code Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
+      # Upgraded to v4.2.0+ to natively support the updated runtime env
       - name: Set up Environment Node Runtime Configuration
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.2.0
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Execute Injection Parsing Scripts Engine
         env:
