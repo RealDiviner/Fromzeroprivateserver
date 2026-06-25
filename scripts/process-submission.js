@@ -15,7 +15,7 @@ function extractField(fieldName) {
 }
 
 let player = extractField("Player");
-const countryStr = extractField("Country"); // New field parser
+const countryStr = extractField("Country");
 const levelChosen = extractField("Level Chosen");
 const percentStr = extractField("Percent achieved");
 const hzStr = extractField("Hardware Refresh Metrics");
@@ -26,8 +26,6 @@ if (player) {
     player = player.replace(/\s*\*\(\s*Case\s*Sensitive\s*\)\*/i, '').trim();
 }
 
-// Clean up country code to be just the 2-letter uppercase ISO variant (e.g., "US")
-// Strips away any emojis passed by the form text automatically
 let country = countryStr ? countryStr.replace(/[^a-zA-Z]/g, '').slice(0, 2).toUpperCase() : "UN"; 
 
 const percent = percentStr ? parseInt(percentStr.replace(/[^0-9]/g, ''), 10) : NaN;
@@ -65,10 +63,9 @@ try {
         levelJson.records = [];
     }
 
-    // Injects the country code directly into the record schema object
     const newRecordEntry = {
         user: player,
-        country: country, // Stored safely as "US", "GB", etc.
+        country: country,
         percent: percent,
         hz: hz,
         mobile: isMobile,
@@ -82,4 +79,4 @@ try {
 } catch (err) {
     console.error("JSON payload modification error:", err);
     process.exit(1);
-} // <--- Added missing closing brace here to fix the script crash
+}
