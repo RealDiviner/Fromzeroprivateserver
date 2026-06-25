@@ -82,3 +82,4 @@ try {
 } catch (err) {
     console.error("JSON payload modification error:", err);
     process.exit(1);
+} // <--- Added missing closing brace here to fix the script crash
