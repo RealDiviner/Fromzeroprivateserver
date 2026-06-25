@@ -62,6 +62,7 @@ export async function fetchLeaderboard() {
             (u) => u.toLowerCase() === level.verifier.toLowerCase(),
         ) || level.verifier;
         scoreMap[verifier] ??= {
+            country: 'UN', // Default state for verifiers until record confirmation
             verified: [],
             completed: [],
             progressed: [],
@@ -79,11 +80,19 @@ export async function fetchLeaderboard() {
             const user = Object.keys(scoreMap).find(
                 (u) => u.toLowerCase() === record.user.toLowerCase(),
             ) || record.user;
+            
             scoreMap[user] ??= {
+                country: record.country || 'UN', // Injects record country tracking data
                 verified: [],
                 completed: [],
                 progressed: [],
             };
+
+            // If a previous verification entry forced default 'UN', update it with the true record country code
+            if (record.country && record.country !== 'UN') {
+                scoreMap[user].country = record.country;
+            }
+
             const { completed, progressed } = scoreMap[user];
             if (record.percent === 100) {
                 completed.push({
@@ -107,13 +116,14 @@ export async function fetchLeaderboard() {
 
     // Wrap in extra Object containing the user and total score
     const res = Object.entries(scoreMap).map(([user, scores]) => {
-        const { verified, completed, progressed } = scores;
+        const { verified, completed, progressed, country } = scores;
         const total = [verified, completed, progressed]
             .flat()
             .reduce((prev, cur) => prev + cur.score, 0);
 
         return {
             user,
+            country: country || 'UN', // Ensures data is passed through to leaderboard.js component maps
             total: round(total),
             ...scores,
         };
