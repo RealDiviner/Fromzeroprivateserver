@@ -10,12 +10,14 @@
     "records": [
                 {
             "user": "crazyboy",
+            "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
                  },
         {
             "user": "MagicMike",
+            "country": "GB",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 87,
             "hz": 240    
