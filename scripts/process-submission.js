@@ -1,59 +1,66 @@
 const fs = require('fs');
 const path = require('path');
 
+// Read the event data payload sent from the GitHub action runner environment
 const issueBody = process.env.ISSUE_BODY;
 if (!issueBody) {
     console.error("No issue body text detected.");
     process.exit(1);
 }
 
-// Fallback search function that looks for multiple variations of a keyword
-function findValue(keys) {
-    for (const key of keys) {
-        const escaped = key.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        const regex = new RegExp(`(?:[^\\w\\n]*)${escaped}[^*:]*\\*?\\*?\\s*:\\s*(.*)`, 'i');
-        const match = issueBody.match(regex);
-        if (match && match[1].trim() && !match[1].includes('LeaveThisUnchanged')) {
-            return match[1].trim();
-        }
-    }
-    return null;
+// Highly precise extraction helper tailored to your exact issue format
+function extractField(fieldName) {
+    const escaped = fieldName.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const regex = new RegExp(`-\\s*\\*\\*${escaped}\\*\\*\\s*:\\s*(.*)`, 'i');
+    const match = issueBody.match(regex);
+    return match ? match[1].trim() : null;
 }
 
-// Scans for various alternative naming conventions your Submit.js might use
-const player = findValue(["Player", "Username", "Name", "User"]);
-const levelPath = findValue(["Level File Path Identifier", "Level Chosen", "LevelPath", "Level", "Lvl"]);
-const percentStr = findValue(["Percent achieved", "Percent", "Percentage", "Progress"]);
-const hzStr = findValue(["Hardware Refresh Metrics", "Refresh Rate", "Hz"]);
-const mobileStr = findValue(["Mobile Run", "Mobile", "Device"]);
-const videoLink = findValue(["Completion Video Proof", "Video Link", "Video", "Proof", "Link"]);
+// Parse fields out of your exact markdown schema
+let player = extractField("Player");
+const levelChosen = extractField("Level Chosen");
+const percentStr = extractField("Percent achieved");
+const hzStr = extractField("Hardware Refresh Metrics");
+const mobileStr = extractField("Mobile Run");
+const videoLink = extractField("Completion Video Proof");
 
+// Clean up the "*(Case Sensitive)*" text if it was appended to the username
+if (player) {
+    player = player.replace(/\s*\*\(\s*Case\s*Sensitive\s*\)\*/i, '').trim();
+}
+
+// Convert numbers safely
 const percent = percentStr ? parseInt(percentStr.replace(/[^0-9]/g, ''), 10) : NaN;
-const hz = hzStr ? parseInt(hzStr.replace(/[^0-9]/g, ''), 10) : 360;
+const hz = hzStr ? parseInt(hzStr.replace(/[^0-9]/g, ''), 10) : 240;
 const isMobile = mobileStr && (mobileStr.toLowerCase().includes('yes') || mobileStr.toLowerCase().includes('true'));
 
 console.log("--- Extracted Metadata Debug Logs ---");
 console.log(`Player: ${player}`);
-console.log(`Level Target: ${levelPath}`);
+console.log(`Level Target: ${levelChosen}`);
 console.log(`Percent: ${percent}%`);
 console.log(`Hardware: ${hz}Hz`);
 console.log(`Mobile: ${isMobile}`);
 console.log(`Video Link: ${videoLink}`);
 console.log("-------------------------------------");
 
-if (!player || !levelPath || isNaN(percent) || !videoLink) {
+// Check that vital parameters exist before processing file mutations
+if (!player || !levelChosen || isNaN(percent) || !videoLink) {
     console.error("Parsing failed. Crucial record fields are missing or formatted incorrectly in the markdown text block.");
     process.exit(1);
 }
 
-const cleanLevelPath = levelPath.replace(/[`']/g, '').trim();
-const targetFilePath = path.join(__dirname, '../data', `${cleanLevelPath}.json`);
+// Convert "Poltergeist" to a standard lowercase filename: "poltergeist.json"
+// Also replaces spaces with hyphens automatically if your file names use them (e.g. "sonic-wave.json")
+const cleanFileName = levelChosen.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
+const targetFilePath = path.join(__dirname, '../data', `${cleanFileName}.json`);
 
 if (!fs.existsSync(targetFilePath)) {
     console.error(`Target level asset file could not be located at path target: ${targetFilePath}`);
+    console.error(`Expected to find a file at: data/${cleanFileName}.json`);
     process.exit(1);
 }
 
+// Read, update, and write the new record to the target level file array string
 try {
     const fileData = fs.readFileSync(targetFilePath, 'utf8');
     const levelJson = JSON.parse(fileData);
@@ -62,16 +69,18 @@ try {
         levelJson.records = [];
     }
 
-    levelJson.records.push({
+    const newRecordEntry = {
         user: player,
         percent: percent,
         hz: hz,
         mobile: isMobile,
         link: videoLink
-    });
+    };
+
+    levelJson.records.push(newRecordEntry);
 
     fs.writeFileSync(targetFilePath, JSON.stringify(levelJson, null, 4), 'utf8');
-    console.log(`Success! Injected record into ${cleanLevelPath}.json for ${player}.`);
+    console.log(`Success! Successfully injected record into ${cleanFileName}.json for player ${player}.`);
 } catch (err) {
     console.error("JSON payload modification error:", err);
     process.exit(1);
