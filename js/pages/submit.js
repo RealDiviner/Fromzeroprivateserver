@@ -1,5 +1,4 @@
 import { store } from '../main.js';
-import { fetchList } from '../content.js';
 
 export default {
     name: 'Submit',
@@ -26,13 +25,29 @@ export default {
         };
     },
     async mounted() {
-        const listData = await fetchList();
-        if (listData) {
-            this.levels = listData
-                .filter(([level]) => level !== null)
-                .map(([level]) => level);
+        try {
+            // Safe dynamically imported fetch fallback to prevent compilation/router crashes
+            const contentModule = await import('../content.js');
+            
+            // Try to resolve the fetchList function whether it's a default export or a named export
+            const fetchListFn = contentModule.fetchList || contentModule.default;
+            
+            if (typeof fetchListFn === 'function') {
+                const listData = await fetchListFn();
+                if (Array.isArray(listData)) {
+                    // Adapt safely to your list data structure layout [level, err] or plain object arrays
+                    this.levels = listData
+                        .filter(item => item !== null && item !== undefined)
+                        .map(item => Array.isArray(item) ? item[0] : item)
+                        .filter(lvl => lvl && (lvl.path || lvl.name));
+                }
+            }
+        } catch (error) {
+            console.error("Failed loading levels dynamically:", error);
+            this.statusMessage = "Notice: Could not load automatic levels menu. Please verify your data configuration files.";
+        } finally {
+            this.isLoadingLevels = false;
         }
-        this.isLoadingLevels = false;
     },
     template: `
         <main class="page-leaderboard-container">
@@ -41,8 +56,8 @@ export default {
                 <h1 class="type-h1" style="margin-bottom: 2rem;">Submit a Record</h1>
                 
                 <div class="tabs" style="margin-bottom: 2rem;">
-                    <button class="tab" :class="{ selected: submissionType === 'record' }" @click="submissionType = 'record'">Player Record</button>
-                    <button class="tab" :class="{ selected: submissionType === 'level' }" @click="submissionType = 'level'">New Level</button>
+                    <button type="button" class="tab" :class="{ selected: submissionType === 'record' }" @click="submissionType = 'record'">Player Record</button>
+                    <button type="button" class="tab" :class="{ selected: submissionType === 'level' }" @click="submissionType = 'level'">New Level</button>
                 </div>
 
                 <form @submit.prevent="handleSubmit" style="display: flex; flex-direction: column; gap: 1.5rem;">
@@ -51,12 +66,14 @@ export default {
                         
                         <div>
                             <label class="type-title-sm" style="display: block; margin-bottom: 0.5rem;">Level Being Completed</label>
-                            <select v-model="form.levelPath" class="leaderboard-search" style="width: 100%; cursor: pointer;" required :disabled="isLoadingLevels">
-                                <option value="" disabled selected>{{ isLoadingLevels ? 'Loading levels...' : 'Click to select a level' }}</option>
-                                <option v-for="lvl in levels" :key="lvl.path" :value="lvl.path">
+                            
+                            <select v-if="levels.length > 0" v-model="form.levelPath" class="leaderboard-search" style="width: 100%; cursor: pointer;" required>
+                                <option value="" disabled selected>Click to select a level</option>
+                                <option v-for="lvl in levels" :key="lvl.path || lvl.name" :value="lvl.path || lvl.name">
                                     {{ lvl.name }}
                                 </option>
                             </select>
+                            <input v-else type="text" v-model="form.levelPath" class="leaderboard-search" placeholder="e.g., Sonic Wave" required :disabled="isLoadingLevels" />
                         </div>
 
                         <div>
@@ -119,7 +136,7 @@ export default {
                         <p class="error" style="border-radius: 0.5rem;">{{ statusMessage }}</p>
                     </div>
 
-                    <button type="submit" class="btn" :disabled="isSubmitting || (submissionType === 'record' && isLoadingLevels)" style="align-self: flex-start; margin-top: 1rem;">
+                    <button type="submit" class="btn" :disabled="isSubmitting" style="align-self: flex-start; margin-top: 1rem;">
                         {{ isSubmitting ? 'Processing Submission...' : 'Submit to Editors' }}
                     </button>
                 </form>
@@ -130,7 +147,7 @@ export default {
     methods: {
         handleSubmit() {
             this.isSubmitting = true;
-            const selectedLevelObj = this.levels.find(l => l.path === this.form.levelPath);
+            const selectedLevelObj = this.levels.find(l => (l.path === this.form.levelPath || l.name === this.form.levelPath));
             const levelDisplayTitle = selectedLevelObj ? selectedLevelObj.name : this.form.levelPath;
 
             const title = this.submissionType === 'record' 
@@ -138,9 +155,10 @@ export default {
                 : `Level Submission Request: ${this.form.levelName}`;
                 
             const body = this.submissionType === 'record'
-                ? `### Player Record Submission\n\n- **Player**: ${this.form.user} *(Case Sensitive)*\n- **Level Chosen**: ${levelDisplayTitle}\n- **Level File Path Identifier**: \`${this.form.levelPath}.json\`\n- **Percent achieved**: ${this.form.percent}%\n- **Hardware Refresh Metrics**: ${this.form.hz}Hz\n- **Mobile Run**: ${this.form.mobile ? 'Yes' : 'No'}\n- **Completion Video Proof**: ${this.form.link}\n\n#### 🔒 Verification Metadata\n- **Unedited Full Length Link**: ${this.form.rawFootage}`
+                ? `### Player Record Submission\n\n- **Player**: ${this.form.user} *(Case Sensitive)*\n- **Level Chosen**: ${levelDisplayTitle}\n- **Percent achieved**: ${this.form.percent}%\n- **Hardware Refresh Metrics**: ${this.form.hz}Hz\n- **Mobile Run**: ${this.form.mobile ? 'Yes' : 'No'}\n- **Completion Video Proof**: ${this.form.link}\n\n#### 🔒 Verification Metadata\n- **Unedited Full Length Link**: ${this.form.rawFootage}`
                 : `### New Level Asset Request\n\n- **Requested Level Name**: ${this.form.levelName}\n- **Creators**: ${this.form.creators}\n- **Verifier Profile**: ${this.form.verifier}\n- **Verification Video Link**: ${this.form.link}`;
 
+            // Replace with your GitHub details
             const repoUrl = `https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/issues/new`;
             const finalUrl = `${repoUrl}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
             
