@@ -2,18 +2,29 @@
     "id": 173,
     "name": "The Hell Origin",
     "author": "Diviner",
-    "creators": ["Sohn0924", "Stormfly"],
+    "creators": [
+        "Sohn0924",
+        "Stormfly"
+    ],
     "verifier": "MagicMike",
     "verification": "https://www.youtube.com/watch?v=k4EfzocNoVo",
     "percentToQualify": 69,
     "password": "Not Copyable",
     "records": [
-                {
+        {
             "user": "Lee_Ping67",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
             "percent": 80,
             "hz": 240
+        },
+        {
+            "user": "Lee_Ping67",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=u5wejnAnJb4"
         }
     ]
 }
