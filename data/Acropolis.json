@@ -45,6 +45,14 @@
             "hz": 240,
             "mobile": false,
             "link": "https://www.youtube.com/watch?v=SSAfuCZ2cks&list=RDSSAfuCZ2cks"
+        },
+        {
+            "user": "AlderTree",
+            "country": "GB",
+            "percent": 100,
+            "hz": 144,
+            "mobile": true,
+            "link": "https://www.youtube.com/watch?v=SSAfuCZ2cks&list=RDSSAfuCZ2cks"
         }
     ]
 }
