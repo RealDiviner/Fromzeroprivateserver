@@ -7,5 +7,13 @@
     "verification": "https://www.youtube.com/watch?v=qLfTtzDAOCY&list=RDqLfTtzDAOCY",
     "percentToQualify": "68",
     "password": "46290",
-    "records": [ ]
+    "records": [ 
+            {
+            "user": "julia",
+            "country": "US",
+            "link": "https://www.youtube.com/watch?v=Qeg8j2pr-0w",
+            "percent": 75,
+            "hz": 240
+        }
+    ]
 }
