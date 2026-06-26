@@ -2,25 +2,35 @@
     "id": 128,
     "name": "El Dorado",
     "author": "Diviner",
-    "creators": ["idk"],
+    "creators": [
+        "idk"
+    ],
     "verifier": "AlderTree",
     "verification": "https://www.youtube.com/watch?v=AY2FnlI-g4k",
     "percentToQualify": "100",
     "password": "Free To Copy",
-    "records": [  
+    "records": [
         {
             "user": "Diviner",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
             "percent": 100,
             "hz": 240
-             },
+        },
         {
             "user": "LeahAutist",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=ziHvsAriE3s",
             "percent": 100,
             "hz": 240
+        },
+        {
+            "user": "femboy:3",
+            "country": "CA",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=L9G-ZgPaDaU"
         }
     ]
 }
