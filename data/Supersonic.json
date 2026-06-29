@@ -2,10 +2,21 @@
     "id": 57436521,
     "name": "Supersonic",
     "author": "Diviner",
-    "creators": ["idk"],
+    "creators": [
+        "idk"
+    ],
     "verifier": "LeahAutist",
     "verification": "https://www.youtube.com/watch?v=YQkoQj2A4D0",
     "percentToQualify": 65,
     "password": "Not Copyable",
-    "records": []
+    "records": [
+        {
+            "user": "GreyHeart",
+            "country": "DE",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=KUItyH1A6s4"
+        }
+    ]
 }
