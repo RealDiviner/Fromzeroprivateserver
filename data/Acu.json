@@ -2,12 +2,14 @@
     "id": 57436521,
     "name": "Acu",
     "author": "Diviner",
-    "creators": ["Neigefu"],
+    "creators": [
+        "Neigefu"
+    ],
     "verifier": "cryingrn",
     "verification": "https://www.youtube.com/watch?v=aGHGYClmtJw&list=RDaGHGYClmtJw",
     "percentToQualify": "71",
     "password": "Free To Copy",
-    "records": [  
+    "records": [
         {
             "user": "LeahAutist",
             "country": "US",
@@ -21,20 +23,28 @@
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
-         },
+        },
         {
             "user": "femboy:3",
             "country": "CA",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
-         },
+        },
         {
             "user": "Sapphic_qt",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
+        },
+        {
+            "user": "Khaos",
+            "country": "CA",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=qTE6hE1a_vU&list=RDqTE6hE1a_vU"
         }
     ]
 }
