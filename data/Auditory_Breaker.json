@@ -2,10 +2,21 @@
     "id": 174,
     "name": "Auditory Breaker",
     "author": "Diviner",
-    "creators": ["idk"],
+    "creators": [
+        "idk"
+    ],
     "verifier": "Diviner",
     "verification": "https://www.youtube.com/watch?v=S4KeK1Hrmfs&list=RDS4KeK1Hrmfs",
     "percentToQualify": 77,
     "password": "Not Copyable",
-    "records": []
+    "records": [
+        {
+            "user": "femboy:3",
+            "country": "CA",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=Crka3_XBhTM&list=RDCrka3_XBhTM"
+        }
+    ]
 }
