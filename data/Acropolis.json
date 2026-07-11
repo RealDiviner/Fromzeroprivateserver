@@ -53,6 +53,14 @@
             "hz": 144,
             "mobile": true,
             "link": "https://www.youtube.com/watch?v=SSAfuCZ2cks&list=RDSSAfuCZ2cks"
+        },
+        {
+            "user": "Kekc",
+            "country": "RU",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=SSAfuCZ2cks&list=RDSSAfuCZ2cks"
         }
     ]
 }
