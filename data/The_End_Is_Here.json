@@ -24,6 +24,14 @@
             "hz": 240,
             "mobile": false,
             "link": "https://www.youtube.com/watch?v=BkNKOsDQuME&list=RDBkNKOsDQuME"
+        },
+        {
+            "user": "yCarter",
+            "country": "AU",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=rMO5BTCyRek&list=RDrMO5BTCyRek"
         }
     ]
 }
