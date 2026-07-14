@@ -1,55 +1,70 @@
 .page-leaderboard-container {
     display: block;
+    min-height: 100vh;
+    background-color: var(--color-background);
 }
+
 .page-leaderboard {
-    height: 100%;
+    min-height: calc(100vh - 120px);
     display: grid;
     grid-template-columns: minmax(24rem, 2fr) 3fr;
     grid-template-rows: max-content max-content max-content 1fr;
     column-gap: 2rem;
     max-width: 80rem;
     margin: 0 auto;
+    padding-bottom: 4rem;
 }
+
 .page-leaderboard > div {
     overflow-y: auto;
 }
+
 .page-leaderboard .leaderboard-search-wrap {
     grid-row: 1;
     grid-column: 1 / span 2;
 }
+
 .page-leaderboard .error-container {
     grid-row: 2;
     grid-column: 1 / span 2;
 }
+
 .page-leaderboard .error-container .error {
     padding: 1rem;
     background-color: var(--color-error);
     color: var(--color-on-error);
 }
+
 .page-leaderboard .board-container,
 .page-leaderboard .player-container {
     grid-row: 4;
     padding-block: 2rem;
 }
+
 .page-leaderboard .board-container {
     padding-inline: 1rem;
 }
+
 .page-leaderboard .board {
     table-layout: auto;
     display: block;
     width: 100%;
 }
+
 .page-leaderboard .board .rank {
     padding-block: 1rem;
     text-align: end;
 }
+
 .page-leaderboard .board .total {
     padding: 1rem;
     text-align: end;
 }
+
 .page-leaderboard .board .user {
     width: 100%;
 }
+
 .page-leaderboard .board .user button {
     background-color: var(--color-background);
     color: var(--color-on-background);
@@ -60,70 +75,79 @@
     word-break: normal;
     overflow-wrap: anywhere;
 }
+
 .page-leaderboard .board .user button:hover {
     background-color: var(--color-background-hover);
     color: var(--color-on-background-hover);
     cursor: pointer;
 }
+
 .page-leaderboard .board .user.active button {
     background-color: var(--color-primary);
     color: var(--color-on-primary);
 }
+
 .page-leaderboard .player {
     display: flex;
     flex-direction: column;
     gap: 2rem;
     padding-right: 2rem;
 }
+
 .page-leaderboard .player .table {
     table-layout: fixed;
 }
+
 .page-leaderboard .player .table tr td:not(:last-child) {
     padding-right: 2rem;
 }
+
 .page-leaderboard .player .table p,
 .page-leaderboard .player .table a {
     padding-block: 1rem;
 }
+
 .page-leaderboard .player .table .rank p,
 .page-leaderboard .player .table .score p {
     text-align: end;
 }
+
 .page-leaderboard .player .table .level {
     width: 100%;
 }
+
 .page-leaderboard .player .table a:hover {
     text-decoration: underline;
 }
 
 /* Search bar styling - matches page colors */
 .leaderboard-search-wrap {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 12px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 12px 0;
 }
 
 .leaderboard-search {
-  width: 100%;
-  max-width: 520px;
-  padding: 10px 14px;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color-on-background);
-  background-color: var(--color-background-hover);
-  color: var(--color-on-background);
-  font-size: 16px;
-  font-family: "Lexend Deca", sans-serif;
-  outline: none;
-  transition: border-color 0.2s, background-color 0.2s;
+    width: 100%;
+    max-width: 520px;
+    padding: 10px 14px;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-on-background);
+    background-color: var(--color-background-hover);
+    color: var(--color-on-background);
+    font-size: 16px;
+    font-family: "Lexend Deca", sans-serif;
+    outline: none;
+    transition: border-color 0.2s, background-color 0.2s;
 }
 
 .leaderboard-search:focus {
-  border-color: var(--color-primary);
-  background-color: var(--color-background);
+    border-color: var(--color-primary);
+    background-color: var(--color-background);
 }
 
 .leaderboard-search::placeholder {
-  color: var(--color-on-background);
-  opacity: 0.6;
+    color: var(--color-on-background);
+    opacity: 0.6;
 }
