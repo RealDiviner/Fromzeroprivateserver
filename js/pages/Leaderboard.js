@@ -87,36 +87,65 @@ export default {
                 </div>
 
                 <div class="player-container">
-                    <div v-if="currentTab === 'players'" class="player">
-                        <h1>{{ getCountryFlag(entry.country) }} #{{ selected + 1 }} {{ entry.user }}</h1>
-                        <h3>{{ entry.total }}</h3>
+                    <div v-if="currentTab === 'players' && entry" class="player-profile-card">
                         
-                        <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length}})</h2>
-                        <table class="table">
-                            <tr v-for="score in entry.verified">
-                                <td class="rank"><p>#{{ score.rank }}</p></td>
-                                <td class="level"><a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a></td>
-                                <td class="score"><p>+{{ localize(score.score) }}</p></td>
-                            </tr>
-                        </table>
-                        
-                        <h2 v-if="entry.completed.length > 0">Completed ({{ entry.completed.length }})</h2>
-                        <table class="table">
-                            <tr v-for="score in entry.completed">
-                                <td class="rank"><p>#{{ score.rank }}</p></td>
-                                <td class="level"><a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a></td>
-                                <td class="score"><p>+{{ localize(score.score) }}</p></td>
-                            </tr>
-                        </table>
-                        
-                        <h2 v-if="entry.progressed.length > 0">Progressed ({{entry.progressed.length}})</h2>
-                        <table class="table">
-                            <tr v-for="score in entry.progressed">
-                                <td class="rank"><p>#{{ score.rank }}</p></td>
-                                <td class="level"><a class="type-label-lg" target="_blank" :href="score.link">{{ score.percent }}% {{ score.level }}</a></td>
-                                <td class="score"><p>+{{ localize(score.score) }}</p></td>
-                            </tr>
-                        </table>
+                        <div class="profile-header">
+                            <span class="profile-flag">{{ getCountryFlag(entry.country) }}</span>
+                            <h1 class="profile-username">{{ entry.user }}</h1>
+                        </div>
+
+                        <div class="profile-stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-label">Demonlist rank</span>
+                                <span class="stat-value">#{{ selected + 1 }}</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Demonlist score</span>
+                                <span class="stat-value">{{ localize(entry.total) }}</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Demonlist stats</span>
+                                <span class="stat-value">{{ entry.statsSummary }}</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Hardest demon</span>
+                                <span class="stat-value">{{ entry.hardest }}</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-records-section">
+                            
+                            <div class="record-list-block" v-if="entry.completed && entry.completed.length > 0">
+                                <h3>Demons completed</h3>
+                                <p class="inline-records-list">
+                                    <span v-for="(score, idx) in entry.completed" :key="idx" class="record-item">
+                                        <a :href="score.link" target="_blank" :class="{ 'main-list': score.rank <= 50 }">{{ score.level }}</a>
+                                        <span v-if="idx < entry.completed.length - 1" class="list-separator"> - </span>
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div class="record-list-block" v-if="entry.verified && entry.verified.length > 0">
+                                <h3>Demons verified</h3>
+                                <p class="inline-records-list">
+                                    <span v-for="(score, idx) in entry.verified" :key="idx" class="record-item">
+                                        <a :href="score.link" target="_blank" :class="{ 'main-list': score.rank <= 50 }">{{ score.level }}</a>
+                                        <span v-if="idx < entry.verified.length - 1" class="list-separator"> - </span>
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div class="record-list-block" v-if="entry.progressed && entry.progressed.length > 0">
+                                <h3>Progress on</h3>
+                                <p class="inline-records-list">
+                                    <span v-for="(score, idx) in entry.progressed" :key="idx" class="record-item">
+                                        <a :href="score.link" target="_blank">{{ score.level }} ({{ score.percent }}%)</a>
+                                        <span v-if="idx < entry.progressed.length - 1" class="list-separator"> - </span>
+                                    </span>
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
 
                     <div v-else class="player">
@@ -157,15 +186,43 @@ export default {
         entry() {
             const selectedPlayer = this.leaderboard[this.selected];
             if (!selectedPlayer) {
-                return { user: '', total: 0, country: 'US', verified: [], completed: [], progressed: [] };
+                return { 
+                    user: '', 
+                    total: 0, 
+                    country: 'US', 
+                    verified: [], 
+                    completed: [], 
+                    progressed: [],
+                    hardest: 'None',
+                    statsSummary: '0 Main, 0 Extended, 0 Legacy'
+                };
             }
+
+            // Calculate "Hardest Demon" dynamically (lowest list rank completion)
+            const completed = selectedPlayer.completed || [];
+            const sortedCompletions = [...completed].sort((a, b) => a.rank - b.rank);
+            const hardest = sortedCompletions.length > 0 ? sortedCompletions[0].level : 'None';
+
+            // Calculate custom list distributions (Main: <=50, Extended: <=150, Legacy: >150)
+            let mainCount = 0;
+            let extendedCount = 0;
+            let legacyCount = 0;
+
+            completed.forEach(c => {
+                if (c.rank <= 50) mainCount++;
+                else if (c.rank <= 150) extendedCount++;
+                else legacyCount++;
+            });
+            const statsSummary = `${mainCount} Main, ${extendedCount} Extended, ${legacyCount} Legacy`;
+
             return {
                 ...selectedPlayer,
-                country: selectedPlayer.country && selectedPlayer.country !== 'UN' ? selectedPlayer.country : 'US'
+                country: selectedPlayer.country && selectedPlayer.country !== 'UN' ? selectedPlayer.country : 'US',
+                hardest,
+                statsSummary
             };
         },
         processedGroups() {
-            // Process group statistics sequentially by referencing live leaderboard states dynamically
             return this.groups.map(group => {
                 let totalPoints = 0;
                 const roster = [];
@@ -181,7 +238,6 @@ export default {
                             country: match.country && match.country !== 'UN' ? match.country : 'US'
                         });
 
-                        // Collate lists across completed entries to compute overlap metrics counters
                         if (match.completed) {
                             match.completed.forEach(c => {
                                 levelCounts[c.level] = (levelCounts[c.level] || 0) + 1;
@@ -197,7 +253,6 @@ export default {
                     }
                 });
 
-                // Convert compilation map into scannable listing vectors filtering items scaling above 1
                 const completions = Object.keys(levelCounts)
                     .map(name => ({ name, count: levelCounts[name] }))
                     .filter(item => item.count >= 1)
@@ -224,7 +279,6 @@ export default {
         this.leaderboard = leaderboard;
         this.err = err;
 
-        // Dynamic parallel processing block safely pulling down structural clan files layout mappings
         try {
             const response = await fetch('/data/_groups.json');
             if (response.ok) {
@@ -242,7 +296,6 @@ export default {
         getCountryFlag,
         switchTab(tabName) {
             this.currentTab = tabName;
-            // Clear text filtering layouts instantly contextually across switches to prevent layout breaks
             const searchInput = document.getElementById('leaderboard-search');
             if (searchInput) searchInput.value = '';
             this.resetSearchFilterVisibility();
