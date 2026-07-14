@@ -1,5 +1,6 @@
 /* 1. Force the global page background to be dark so no white can ever leak through */
-html, body {
+html,
+body {
     background-color: var(--color-background);
     margin: 0;
     padding: 0;
@@ -99,6 +100,128 @@ html, body {
     color: var(--color-on-primary);
 }
 
+/* ----------------------------------------------------
+   POINTERCRATE PLAYER PROFILE STYLING
+------------------------------------------------------- */
+
+.player-profile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: var(--color-background-hover);
+    border-radius: 0.75rem;
+    margin-right: 1rem;
+}
+
+/* Centered Header Section */
+.profile-header {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.profile-flag {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.profile-username {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    color: var(--color-on-background);
+}
+
+/* 2x2 Grid of Stats Cards */
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: var(--color-background);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+/* Inline Lists (Completed, Verified, and Progress) */
+.profile-records-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    margin-top: 1rem;
+}
+
+.record-list-block h3 {
+    text-align: center;
+    font-size: 1.15rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--color-on-background);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.inline-records-list {
+    text-align: center;
+    line-height: 1.8;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.record-item a {
+    color: #4ba2ff;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.record-item a:hover {
+    text-decoration: underline;
+    color: var(--color-primary);
+}
+
+/* Main List highlights (Rank 1-50) get bolded and colored in standard text color */
+.record-item a.main-list {
+    font-weight: bold;
+    color: var(--color-on-background);
+}
+
+.record-item a.main-list:hover {
+    color: var(--color-primary);
+}
+
+/* Faded dash separators between levels */
+.list-separator {
+    color: rgba(255, 255, 255, 0.25);
+    margin: 0 0.4rem;
+}
+
+/* ----------------------------------------------------
+   OLD TEAM GROUPS TABLE FALLBACK & DEFAULTS
+------------------------------------------------------- */
+
 .page-leaderboard .player {
     display: flex;
     flex-direction: column;
@@ -132,7 +255,10 @@ html, body {
     text-decoration: underline;
 }
 
-/* Search bar styling - matches page colors */
+/* ----------------------------------------------------
+   SEARCH BAR STYLING
+------------------------------------------------------- */
+
 .leaderboard-search-wrap {
     width: 100%;
     display: flex;
