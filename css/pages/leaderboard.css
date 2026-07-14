@@ -1,18 +1,28 @@
+/* 1. Force the global page background to be dark so no white can ever leak through */
+html, body {
+    background-color: var(--color-background);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* 2. Constrain the container to the screen height */
 .page-leaderboard-container {
     display: block;
-    min-height: 100vh;
+    height: 100vh; 
+    overflow: hidden; /* Prevents the main page from scrolling double */
     background-color: var(--color-background);
 }
 
+/* 3. Keep the grid at a neat, fixed height so the columns scroll internally */
 .page-leaderboard {
-    min-height: calc(100vh - 120px);
+    height: calc(100vh - 80px); /* Adjusts height to fit your navbar/tabs */
     display: grid;
     grid-template-columns: minmax(24rem, 2fr) 3fr;
     grid-template-rows: max-content max-content max-content 1fr;
     column-gap: 2rem;
     max-width: 80rem;
     margin: 0 auto;
-    padding-bottom: 4rem;
 }
 
 .page-leaderboard > div {
@@ -35,10 +45,12 @@
     color: var(--color-on-error);
 }
 
+/* 4. Add a safety margin to the bottom of the scrolling lists so the last rows aren't cut off */
 .page-leaderboard .board-container,
 .page-leaderboard .player-container {
     grid-row: 4;
-    padding-block: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 6rem; /* Creates a clean safety buffer at the bottom of the scroll */
 }
 
 .page-leaderboard .board-container {
