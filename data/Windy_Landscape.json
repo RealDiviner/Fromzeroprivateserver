@@ -2,18 +2,28 @@
     "id": 128,
     "name": "Windy Landscape",
     "author": "Diviner",
-    "creators": ["idk"],
+    "creators": [
+        "idk"
+    ],
     "verifier": "LeahAutist",
     "verification": "https://www.youtube.com/watch?v=hTX0Ch5bgMw",
     "percentToQualify": "74",
     "password": "Free To Copy",
-    "records": [  
+    "records": [
         {
             "user": "Diviner",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
             "percent": 100,
             "hz": 240
+        },
+        {
+            "user": "Mitril",
+            "country": "DE",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=ICYmhBFVEOc"
         }
     ]
 }
