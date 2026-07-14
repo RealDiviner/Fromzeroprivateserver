@@ -59,6 +59,14 @@
             "hz": 240,
             "mobile": false,
             "link": "https://www.youtube.com/watch?v=63sr55FXqsI&list=RD63sr55FXqsI"
+        },
+        {
+            "user": "Layzer",
+            "country": "US",
+            "percent": 100,
+            "hz": 144,
+            "mobile": true,
+            "link": "https://www.youtube.com/watch?v=63sr55FXqsI&list=RD63sr55FXqsI"
         }
     ]
 }
