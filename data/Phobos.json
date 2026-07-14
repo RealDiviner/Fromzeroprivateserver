@@ -24,6 +24,14 @@
             "hz": 144,
             "mobile": true,
             "link": "https://www.youtube.com/watch?v=64Qfx-PZ2Qk&list=RD64Qfx-PZ2Qk"
+        },
+        {
+            "user": "Djsodhwi",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=64Qfx-PZ2Qk&list=RD64Qfx-PZ2Qk"
         }
     ]
 }
