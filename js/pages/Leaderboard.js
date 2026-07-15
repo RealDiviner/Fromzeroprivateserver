@@ -119,7 +119,7 @@ export default {
                                 <h3>Demons completed</h3>
                                 <p class="inline-records-list">
                                     <span v-for="(score, idx) in entry.completed" :key="idx" class="record-item">
-                                        <a :href="score.link" target="_blank" :class="{ 'main-list': score.rank <= 50 }">{{ score.level }}</a>
+                                        <a :href="score.link" target="_blank" :class="{ 'main-list': score.rank <= 75 }">{{ score.level }}</a>
                                         <span v-if="idx < entry.completed.length - 1" class="list-separator"> - </span>
                                     </span>
                                 </p>
@@ -129,7 +129,7 @@ export default {
                                 <h3>Demons verified</h3>
                                 <p class="inline-records-list">
                                     <span v-for="(score, idx) in entry.verified" :key="idx" class="record-item">
-                                        <a :href="score.link" target="_blank" :class="{ 'main-list': score.rank <= 50 }">{{ score.level }}</a>
+                                        <a :href="score.link" target="_blank" :class="{ 'main-list': score.rank <= 75 }">{{ score.level }}</a>
                                         <span v-if="idx < entry.verified.length - 1" class="list-separator"> - </span>
                                     </span>
                                 </p>
@@ -203,15 +203,19 @@ export default {
             const sortedCompletions = [...completed].sort((a, b) => a.rank - b.rank);
             const hardest = sortedCompletions.length > 0 ? sortedCompletions[0].level : 'None';
 
-            // Calculate custom list distributions (Main: <=50, Extended: <=150, Legacy: >150)
+            // Calculate custom list distributions (Main: <=75, Extended: 76-150, Legacy: >=151)
             let mainCount = 0;
             let extendedCount = 0;
             let legacyCount = 0;
 
             completed.forEach(c => {
-                if (c.rank <= 50) mainCount++;
-                else if (c.rank <= 150) extendedCount++;
-                else legacyCount++;
+                if (c.rank <= 75) {
+                    mainCount++;
+                } else if (c.rank <= 150) {
+                    extendedCount++;
+                } else {
+                    legacyCount++;
+                }
             });
             const statsSummary = `${mainCount} Main, ${extendedCount} Extended, ${legacyCount} Legacy`;
 
