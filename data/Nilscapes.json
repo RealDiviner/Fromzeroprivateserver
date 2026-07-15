@@ -2,10 +2,21 @@
     "id": 182,
     "name": "Nilscapes",
     "author": "Diviner",
-    "creators": ["idk"],
+    "creators": [
+        "idk"
+    ],
     "verifier": "LeechMan50",
     "verification": "https://www.youtube.com/watch?v=irQJWmqX_4A&list=RDirQJWmqX_4A",
     "percentToQualify": 100,
     "password": "Not Copyable",
-    "records": []
+    "records": [
+        {
+            "user": "Diviner",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=zIbardyGrRk&list=RDzIbardyGrRk"
+        }
+    ]
 }
