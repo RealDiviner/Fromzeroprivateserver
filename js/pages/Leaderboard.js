@@ -198,10 +198,13 @@ export default {
                 };
             }
 
-            // Calculate "Hardest Demon" dynamically (lowest list rank completion)
             const completed = selectedPlayer.completed || [];
-            const sortedCompletions = [...completed].sort((a, b) => a.rank - b.rank);
-            const hardest = sortedCompletions.length > 0 ? sortedCompletions[0].level : 'None';
+            const verified = selectedPlayer.verified || [];
+
+            // Combine completed levels and verified levels to search for the absolute hardest (lowest rank)
+            const allPassedRecords = [...completed, ...verified];
+            const sortedRecords = allPassedRecords.sort((a, b) => a.rank - b.rank);
+            const hardest = sortedRecords.length > 0 ? sortedRecords[0].level : 'None';
 
             // Calculate custom list distributions (Main: <=75, Extended: 76-150, Legacy: >=151)
             let mainCount = 0;
