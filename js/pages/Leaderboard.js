@@ -206,15 +206,24 @@ export default {
             const sortedRecords = allPassedRecords.sort((a, b) => a.rank - b.rank);
             const hardest = sortedRecords.length > 0 ? sortedRecords[0].level : 'None';
 
+            // Use a Map/Set to deduplicate by level name if a user has completed and verified the same level
+            const uniqueRecordsMap = new Map();
+            allPassedRecords.forEach(record => {
+                // Keep the record with the lower rank (hardest version) if there's a conflict
+                if (!uniqueRecordsMap.has(record.level) || record.rank < uniqueRecordsMap.get(record.level).rank) {
+                    uniqueRecordsMap.set(record.level, record);
+                }
+            });
+
             // Calculate custom list distributions (Main: <=75, Extended: 76-150, Legacy: >=151)
             let mainCount = 0;
             let extendedCount = 0;
             let legacyCount = 0;
 
-            completed.forEach(c => {
-                if (c.rank <= 75) {
+            uniqueRecordsMap.forEach(record => {
+                if (record.rank <= 75) {
                     mainCount++;
-                } else if (c.rank <= 150) {
+                } else if (record.rank <= 150) {
                     extendedCount++;
                 } else {
                     legacyCount++;
