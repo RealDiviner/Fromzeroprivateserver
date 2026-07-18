@@ -2,32 +2,42 @@
     "id": 57436521,
     "name": "Eon",
     "author": "Diviner",
-    "creators": ["Renn241"],
+    "creators": [
+        "Renn241"
+    ],
     "verifier": "LeahAutist",
     "verification": "https://www.youtube.com/watch?v=BpNS9_VejvM&list=RDBpNS9_VejvM",
     "percentToQualify": "90",
     "password": "Free To Copy",
-    "records": [  
+    "records": [
         {
             "user": "crazyboy",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=VV0IccFXb0Q&list=RDVV0IccFXb0Q",
             "percent": 100,
             "hz": 240
-             },
+        },
         {
             "user": "Djsodhwi",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
-             },
+        },
         {
             "user": "Diviner",
             "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
+        },
+        {
+            "user": "femboy:3",
+            "country": "CA",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=Qeg8j2pr-0w&list=PLW9sysJ7_cNO6_WAJ6Uhu9_We0sF5BztV&index=8"
         }
     ]
 }
