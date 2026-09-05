@@ -2,18 +2,28 @@
     "id": 177,
     "name": "Duelo Maestro",
     "author": "Diviner",
-    "creators": ["Nacho"],
+    "creators": [
+        "Nacho"
+    ],
     "verifier": "Axim",
     "verification": "https://www.youtube.com/watch?v=IMeWHcnYgkk&list=RDIMeWHcnYgkk",
     "percentToQualify": 100,
     "password": "Not Copyable",
     "records": [
-         {
+        {
             "user": "SpiritX",
-             "country": "US",
+            "country": "US",
             "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
             "percent": 100,
             "hz": 240
+        },
+        {
+            "user": "Diviner",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=AeUeLzBO0go&list=RDAeUeLzBO0go&start_radio=1"
         }
     ]
 }
