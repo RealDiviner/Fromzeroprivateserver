@@ -109,6 +109,14 @@
             "hz": 240,
             "mobile": false,
             "link": "https://www.youtube.com/watch?v=hkyypnUs6q8&list=RDhkyypnUs6q8&start_radio=1"
+        },
+        {
+            "user": "cryingrn",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=hkyypnUs6q8&list=RDhkyypnUs6q8&start_radio=1"
         }
     ]
 }
