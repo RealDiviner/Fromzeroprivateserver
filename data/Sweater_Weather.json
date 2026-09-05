@@ -2,10 +2,21 @@
     "id": 176,
     "name": "Sweater Weather",
     "author": "Diviner",
-    "creators": ["VelYT"],
+    "creators": [
+        "VelYT"
+    ],
     "verifier": "Lee_Ping67",
     "verification": "https://www.youtube.com/watch?v=kZxTPmQfPvY&list=RDkZxTPmQfPvY",
     "percentToQualify": 63,
     "password": "Not Copyable",
-    "records": []
+    "records": [
+        {
+            "user": "Diviner",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=AeUeLzBO0go&list=RDAeUeLzBO0go&start_radio=1"
+        }
+    ]
 }
