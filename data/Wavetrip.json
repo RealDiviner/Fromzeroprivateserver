@@ -2,10 +2,21 @@
     "id": 178,
     "name": "Wavetrip",
     "author": "Diviner",
-    "creators": ["idk"],
+    "creators": [
+        "idk"
+    ],
     "verifier": "AlderTree",
     "verification": "https://www.youtube.com/watch?v=YLCX7sZF-40&list=RDYLCX7sZF-40",
     "percentToQualify": 77,
     "password": "Not Copyable",
-    "records": []
+    "records": [
+        {
+            "user": "Diviner",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=AeUeLzBO0go&list=RDAeUeLzBO0go&start_radio=1"
+        }
+    ]
 }
