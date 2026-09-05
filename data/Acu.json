@@ -45,6 +45,14 @@
             "hz": 240,
             "mobile": false,
             "link": "https://www.youtube.com/watch?v=qTE6hE1a_vU&list=RDqTE6hE1a_vU"
+        },
+        {
+            "user": "Diviner",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=AeUeLzBO0go&list=RDAeUeLzBO0go&start_radio=1"
         }
     ]
 }
