@@ -469,7 +469,7 @@ export default {
                 const commitSha = commits[0].sha;
 
                 // Fetch raw JSON content at that historical commit
-                const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${commitSha}/${targetFilePath}`;
+                const rawUrl = `https://raw.githubusercontent.com/${RealDiviner}/${Fromzeroprivateserver}/${commitSha}/${targetFilePath}`;
                 const fileRes = await fetch(rawUrl);
 
                 if (!fileRes.ok) {
