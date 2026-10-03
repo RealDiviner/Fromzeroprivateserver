@@ -125,6 +125,14 @@
             "hz": 144,
             "mobile": true,
             "link": "https://www.youtube.com/watch?v=e-Zcz9J1UOs&list=RDe-Zcz9J1UOs&start_radio=1"
+        },
+        {
+            "user": "Noizy",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=SSAfuCZ2cks&list=RDSSAfuCZ2cks&start_radio=1"
         }
     ]
 }
