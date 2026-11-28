@@ -2,10 +2,21 @@
     "id": 202,
     "name": "Plasma Pulse Finale",
     "author": "Diviner",
-    "creators": ["Xsmokes and GironDavid"],
+    "creators": [
+        "Xsmokes and GironDavid"
+    ],
     "verifier": "Diviner",
     "verification": "https://www.youtube.com/watch?v=7mziQwK1C4g&list=RD7mziQwK1C4g",
     "percentToQualify": 69,
     "password": "Not Copyable",
-    "records": []
+    "records": [
+        {
+            "user": "Sapphic_qt",
+            "country": "US",
+            "percent": 100,
+            "hz": 240,
+            "mobile": false,
+            "link": "https://www.youtube.com/watch?v=f2XdHh4HaEc"
+        }
+    ]
 }
